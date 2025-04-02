@@ -20,7 +20,7 @@ const getIndex = (req, res) => {
 }
 // Login handler
 const loginUser = passport.authenticate("local", {
-  successRedirect: "/",
+  successRedirect: "/profile",
   failureRedirect: "/",
   failureFlash: true,
 })

@@ -10,6 +10,7 @@
     <p style="color: red"><%= messages.error[0] %></p>
     <% } %> <% if (user) {%>
     <h1>Welcome back, you are logged as <%= user.email %></h1>
+    <a href="/profile">Go to your profile</a>
     <a href="/logout">Log out</a>
     <% } else { %>
     <h1>Please Log In</h1>

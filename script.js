@@ -12,6 +12,7 @@ const flash = require("connect-flash")
 const LocalStrategy = require("passport-local").Strategy
 const indexRouter = require("./routers/indexRouter")
 const signUpRouter = require("./routers/signUpRouter")
+const profileRouter = require("./routers/profileRouter")
 const app = express()
 
 app.set("views", path.join(__dirname, "views"))
@@ -45,7 +46,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Set up Passport Local Strategy
-
+app.use("/profile", profileRouter)
 app.use("/sign-up", signUpRouter)
 app.use("/", indexRouter)
 

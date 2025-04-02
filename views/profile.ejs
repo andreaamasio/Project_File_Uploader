@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+  </head>
+  <body>
+    <% if (messages.error && messages.error.length > 0) { %>
+    <p style="color: red"><%= messages.error[0] %></p>
+    <% } %> <% if (user) { %>
+    <h1>Profile section of <%= user.email %></h1>
+    <h2>Fill the form below to upload a file</h2>
+    <form action="/profile" method="POST" enctype="multipart/form-data">
+      <label for="file_name">File name:</label>
+      <input
+        id="file_name"
+        name="file_name"
+        placeholder="file_name"
+        type="text"
+      />
+
+      <label for="avatar">File:</label>
+      <input type="file" name="avatar" />
+
+      <button type="submit">Upload</button>
+    </form>
+
+    <a href="/">Go to homepage</a>
+    <a href="/logout">Log out</a>
+    <% } else { %>
+    <p>Please log in first on the homepage.</p>
+    <a href="/">Go to homepage</a>
+    <% } %>
+  </body>
+</html>
