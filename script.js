@@ -2,15 +2,23 @@ const expressSession = require("express-session")
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store")
 const { PrismaClient } = require("@prisma/client")
 const path = require("node:path")
-const { Pool } = require("pg")
+//const { Pool } = require("pg")
 const express = require("express")
 const session = require("express-session")
+const flash = require("connect-flash")
 const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy
+const indexRouter = require("./routers/indexRouter")
+const signUpRouter = require("./routers/signUpRouter")
 const app = express()
 
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.user = req.user // Make user available in all templates
+  next()
+})
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }))
 app.use(passport.session())
@@ -31,6 +39,7 @@ app.use(
     }),
   })
 )
-app.get("/", (req, res) => res.render("index"))
+app.use("/sign-up", signUpRouter)
+app.use("/", indexRouter)
 
 app.listen(3000, () => console.log("app listening on port 3000!"))

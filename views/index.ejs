@@ -3,9 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File Uploader</title>
+    <title>Home</title>
   </head>
   <body>
-    <h1>Hello File Uploader</h1>
+    <% if (messages.error && messages.error.length > 0) { %>
+    <p style="color: red"><%= messages.error[0] %></p>
+    <% } %> <% if (user) {%>
+    <h1>Welcome back, you are logged as <%= user.email %></h1>
+    <a href="/login/logout">Log out</a>
+    <% } else { %>
+    <h1>Please Log In</h1>
+    <form action="/login" method="POST">
+      <label for="email">Email:</label>
+      <input type="text" name="email" id="email" />
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" />
+      <button type="submit">Log in</button>
+    </form>
+    <p>Not a User? <a href="/sign-up">Sign Up</a></p>
+    <% } %>
   </body>
 </html>
