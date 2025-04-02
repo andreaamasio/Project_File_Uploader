@@ -20,7 +20,13 @@
   "homepage": "https://github.com/andreaamasio/Project_File_Uploader#readme",
   "dependencies": {
     "@prisma/client": "^6.5.0",
-    "express": "^5.1.0"
+    "@quixo3/prisma-session-store": "^3.1.13",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.14.1"
   },
   "devDependencies": {
     "@types/node": "^22.13.17",
