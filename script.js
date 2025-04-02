@@ -1,12 +1,14 @@
 const expressSession = require("express-session")
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store")
 const { PrismaClient } = require("@prisma/client")
+const passport = require("./passportConfig")
 const path = require("node:path")
+const db = require("./db/queries")
 //const { Pool } = require("pg")
 const express = require("express")
 const session = require("express-session")
 const flash = require("connect-flash")
-const passport = require("passport")
+
 const LocalStrategy = require("passport-local").Strategy
 const indexRouter = require("./routers/indexRouter")
 const signUpRouter = require("./routers/signUpRouter")
@@ -39,6 +41,11 @@ app.use(
     }),
   })
 )
+app.use(passport.initialize())
+app.use(passport.session())
+
+// Set up Passport Local Strategy
+
 app.use("/sign-up", signUpRouter)
 app.use("/", indexRouter)
 

@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator")
 const bcrypt = require("bcryptjs")
-//const db = require("../db/queries")
+const db = require("../db/queries")
 const session = require("express-session")
 const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy
@@ -44,7 +44,7 @@ const postSignUp = [
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       console.log("errors found")
-      return res.status(400).render("sign-up-form", {
+      return res.status(400).render("sign-up", {
         errors: errors.array(),
       })
     }
