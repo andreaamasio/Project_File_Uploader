@@ -27,12 +27,12 @@ passport.use(
 )
 
 passport.serializeUser((user, done) => {
-  done(null, user.id)
+  done(null, user.id) // Store user ID in session
 })
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await db.findUserById(id)
+    const user = await db.findUserById(id) // Fetch user by ID
     done(null, user)
   } catch (error) {
     done(error)
