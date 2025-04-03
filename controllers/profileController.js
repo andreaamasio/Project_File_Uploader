@@ -1,9 +1,6 @@
 const { body, validationResult } = require("express-validator")
-
+const db = require("../db/queries")
 const emptyErr = "cannot be empty."
-const validateUser = [
-  body("file_name").trim().notEmpty().withMessage(`Email: ${emptyErr}`),
-]
 
 const getProfile = (req, res) => {
   // Get the flash messages from the session
@@ -18,8 +15,11 @@ const getProfile = (req, res) => {
     user: req.user,
   })
 }
-const postSignUp = [
-  validateUser,
+const validateFile = [
+  body("file_name").trim().notEmpty().withMessage(`File Name: ${emptyErr}`),
+]
+const postProfile = [
+  validateFile,
   async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -29,13 +29,25 @@ const postSignUp = [
       })
     }
 
+    // Fix: Extract user ID correctly
+    let userId = req.user?.id // Ensure it's the ID, not the whole user object
+    console.log(`userId: ${userId}`)
+
+    if (!userId) {
+      console.error("Error: User ID not found.")
+      return res.status(401).send("Unauthorized: No user logged in.")
+    }
+
     let file_name = req.body.file_name
+    console.log(`file_name: ${file_name}`)
 
-    console.log(`file_name:${file_name}`)
-
-    await db.postNewUser(email, hashedPassword)
-
-    res.redirect("/")
+    try {
+      await db.uploadFile(userId, file_name)
+      res.redirect("/")
+    } catch (error) {
+      console.error("File upload failed:", error)
+      res.status(500).send("Error uploading file")
+    }
   },
 ]
-module.exports = { getProfile }
+module.exports = { getProfile, postProfile }

@@ -58,4 +58,5 @@ const postSignUp = [
     res.redirect("/")
   },
 ]
+
 module.exports = { getSignUp, postSignUp }

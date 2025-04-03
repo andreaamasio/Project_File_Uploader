@@ -16,22 +16,33 @@ datasource db {
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String // MediumText may be needed for MySql
+  data      String
   expiresAt DateTime
 }
 
 model User {
-  id String @id @default(uuid())
-
-  email    String          @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
   password String
-  files    FilesUploaded[]
+  files    Files[]
+  folders  Folder[]
 
   @@index([email])
 }
 
-model FilesUploaded {
+model Files {
   id           String @id @default(uuid())
+  name         String
   uploadedBy   User   @relation(fields: [uploadedById], references: [id])
   uploadedById String
+  folder       Folder @relation(fields: [folderId], references: [id])
+  folderId     String
+}
+
+model Folder {
+  id          String  @id @default(uuid())
+  name        String  @default("main") // Folder name
+  createdBy   User    @relation(fields: [createdById], references: [id])
+  createdById String
+  files       Files[]
 }
