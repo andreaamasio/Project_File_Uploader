@@ -31,18 +31,20 @@ model User {
 }
 
 model Files {
-  id           String @id @default(uuid())
+  id           String   @id @default(uuid())
   name         String
-  uploadedBy   User   @relation(fields: [uploadedById], references: [id])
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
   uploadedById String
-  folder       Folder @relation(fields: [folderId], references: [id])
+  folder       Folder   @relation(fields: [folderId], references: [id])
   folderId     String
+  uploadedTime DateTime @default(now())
 }
 
 model Folder {
-  id          String  @id @default(uuid())
-  name        String  @default("main") // Folder name
-  createdBy   User    @relation(fields: [createdById], references: [id])
+  id          String   @id @default(uuid())
+  name        String   @default("main") // Folder name
+  createdBy   User     @relation(fields: [createdById], references: [id])
   createdById String
   files       Files[]
+  createdTime DateTime @default(now())
 }

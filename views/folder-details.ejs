@@ -14,8 +14,7 @@
     <!-- TODO CREATE INPUT TO INSERT NEW NAME OF FOLDER AND ANOTHER CONTROL TO DELETE IT -->
     <div class="folder_board">
       <div class="folder_name"><%= folder.name %></div>
-
-      <div><a href="/folder/details/<%= folder.id %>">Open/Modify</a></div>
+      <div class="folder_time"><%= folder.createdTime %></div>
     </div>
 
     <h2>Create a new folder:</h2>
@@ -29,22 +28,6 @@
         required
       />
       <button type="submit">Create</button>
-    </form>
-    <h2>Fill the form below to upload a file</h2>
-    <form action="/profile" method="POST" enctype="multipart/form-data">
-      <label for="file_name">File name:</label>
-      <input
-        id="file_name"
-        name="file_name"
-        placeholder="type your file name"
-        type="text"
-        required
-      />
-
-      <label for="uploaded_file">File:</label>
-      <input type="file" name="uploaded_file" />
-
-      <button type="submit">Upload</button>
     </form>
 
     <a href="/profile">Go to profile</a>

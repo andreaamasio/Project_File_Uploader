@@ -18,5 +18,9 @@ profileRouter.get(
   "/folder/details/:folderId",
   profileController.getFolderDetails
 )
+profileRouter.post(
+  "/folder/details/:folderId",
+  profileController.postFolderDetails
+)
 
 module.exports = profileRouter
