@@ -38,6 +38,24 @@ async function findUserById(id) {
     throw error
   }
 }
+async function getAllFolders(userId) {
+  try {
+    const folders = await prisma.folder.findMany({
+      where: { createdById: userId },
+    })
+
+    if (folders) {
+      console.log(`Folders founds: ${folders}`)
+    } else {
+      console.log(`Folders not found by userID: ${userId}`)
+    }
+
+    return folders
+  } catch (error) {
+    console.error(`Error finding folders by ID (${userId}):`, error)
+    throw error
+  }
+}
 
 // async function postNewUser(email, hashedPassword) {
 //   try {
@@ -108,5 +126,28 @@ async function uploadFile(userId, file_name, folderName = "main") {
     throw error
   }
 }
+async function postNewFolder(userId, folder_name) {
+  try {
+    const newFolder = await prisma.folder.create({
+      data: {
+        name: folder_name,
+        createdById: userId,
+      },
+    })
 
-module.exports = { findUserByEmail, findUserById, postNewUser, uploadFile }
+    console.log(`Folder created successfully in db with name: ${folder_name}`)
+    return newFolder
+  } catch (error) {
+    console.error(`Error creating folder:`, error)
+    throw error
+  }
+}
+
+module.exports = {
+  findUserByEmail,
+  findUserById,
+  postNewUser,
+  uploadFile,
+  postNewFolder,
+  getAllFolders,
+}

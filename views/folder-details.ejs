@@ -10,15 +10,14 @@
     messages.error.length > 0) { %>
     <p style="color: red"><%= messages.error[0] %></p>
     <% } %> <% if (user) { %>
-    <h1>Profile section of <%= user.email %></h1>
-    <% folders.forEach((folder)=>{ %>
+    <h1>Folder of <%= user.email %></h1>
+    <!-- TODO CREATE INPUT TO INSERT NEW NAME OF FOLDER AND ANOTHER CONTROL TO DELETE IT -->
     <div class="folder_board">
       <div class="folder_name"><%= folder.name %></div>
 
       <div><a href="/folder/details/<%= folder.id %>">Open/Modify</a></div>
     </div>
 
-    <% }) %>
     <h2>Create a new folder:</h2>
     <form action="/profile/new-folder" method="POST">
       <label for="folder_name">Folder Name</label>
@@ -48,7 +47,7 @@
       <button type="submit">Upload</button>
     </form>
 
-    <a href="/">Go to homepage</a>
+    <a href="/profile">Go to profile</a>
     <a href="/logout">Log out</a>
     <% } else { %>
     <p>Please log in first on the homepage.</p>

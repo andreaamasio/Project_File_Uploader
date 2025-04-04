@@ -13,5 +13,10 @@ profileRouter.post(
   upload.single("uploaded_file"),
   profileController.postProfile
 )
+profileRouter.post("/new-folder", profileController.postNewFolder)
+profileRouter.get(
+  "/folder/details/:folderId",
+  profileController.getFolderDetails
+)
 
 module.exports = profileRouter
