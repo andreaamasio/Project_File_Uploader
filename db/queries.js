@@ -38,6 +38,24 @@ async function findUserById(id) {
     throw error
   }
 }
+async function findFolderById(id) {
+  try {
+    const user = await prisma.folder.findUnique({
+      where: { id },
+    })
+
+    if (user) {
+      console.log(`Folder found by ID: ${id}`)
+    } else {
+      console.log(`Folder not found by ID: ${id}`)
+    }
+
+    return user
+  } catch (error) {
+    console.error(`Error finding folder by ID (${id}):`, error)
+    throw error
+  }
+}
 async function getAllFolders(userId) {
   try {
     const folders = await prisma.folder.findMany({
@@ -57,6 +75,21 @@ async function getAllFolders(userId) {
   }
 }
 
+async function folderDelete(folderId) {
+  try {
+    const deletedFolder = await prisma.folder.delete({
+      where: { id: folderId },
+    })
+
+    console.log(
+      `Folder deleted successfully: ${deletedFolder.id} (${deletedFolder.name})`
+    )
+    return deletedFolder
+  } catch (error) {
+    console.error(`Error deleting folder by ID (${folderId}):`, error)
+    throw error
+  }
+}
 // async function postNewUser(email, hashedPassword) {
 //   try {
 //     const newUser = await prisma.user.create({
@@ -143,6 +176,26 @@ async function postNewFolder(userId, folder_name) {
   }
 }
 
+async function postNewNameFolder(folderId, new_folder_name) {
+  try {
+    const updatedFolder = await prisma.folder.update({
+      where: {
+        id: folderId,
+      },
+      data: {
+        name: new_folder_name,
+      },
+    })
+
+    console.log(
+      `Folder updated successfully in db with new name: ${new_folder_name}`
+    )
+    return updatedFolder
+  } catch (error) {
+    console.error(`Error updating folder name:`, error)
+    throw error
+  }
+}
 module.exports = {
   findUserByEmail,
   findUserById,
@@ -150,4 +203,7 @@ module.exports = {
   uploadFile,
   postNewFolder,
   getAllFolders,
+  postNewNameFolder,
+  findFolderById,
+  folderDelete,
 }

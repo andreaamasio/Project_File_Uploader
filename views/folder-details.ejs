@@ -11,25 +11,27 @@
     <p style="color: red"><%= messages.error[0] %></p>
     <% } %> <% if (user) { %>
     <h1>Folder of <%= user.email %></h1>
-    <!-- TODO CREATE INPUT TO INSERT NEW NAME OF FOLDER AND ANOTHER CONTROL TO DELETE IT -->
+
     <div class="folder_board">
       <div class="folder_name"><%= folder.name %></div>
       <div class="folder_time"><%= folder.createdTime %></div>
     </div>
 
-    <h2>Create a new folder:</h2>
-    <form action="/profile/new-folder" method="POST">
-      <label for="folder_name">Folder Name</label>
+    <h2>Modify folder:</h2>
+    <form action="/profile/folder/details/<%= folder.id %>" method="POST">
+      <label for="new_folder_name">Enter new Folder Name</label>
       <input
-        id="folder_name"
-        name="folder_name"
-        placeholder="Type the folder name"
+        id="new_folder_name"
+        name="new_folder_name"
+        placeholder="Type the new folder name"
         type="text"
         required
       />
-      <button type="submit">Create</button>
+      <button type="submit">Modify</button>
     </form>
-
+    <a href="/profile/folder/details/<%= folder.id %>/delete"
+      >Delete this Folder</a
+    >
     <a href="/profile">Go to profile</a>
     <a href="/logout">Log out</a>
     <% } else { %>
