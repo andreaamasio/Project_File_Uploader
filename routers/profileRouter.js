@@ -26,5 +26,17 @@ profileRouter.get(
   "/folder/details/:folderId/delete",
   profileController.getFolderDelete
 )
+profileRouter.get(
+  "/folder/details/:folderId/:fileId",
+  profileController.getFileDetails
+)
+profileRouter.post(
+  "/folder/details/:folderId/:fileId",
+  profileController.postFileDetails
+)
+profileRouter.get(
+  "/folder/details/:folderId/:fileId/delete",
+  profileController.getFileDelete
+)
 
 module.exports = profileRouter

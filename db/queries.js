@@ -56,6 +56,43 @@ async function findFolderById(id) {
     throw error
   }
 }
+async function findFileById(id) {
+  try {
+    const file = await prisma.files.findUnique({
+      where: { id },
+    })
+
+    if (file) {
+      console.log(`File found by ID: ${id}`)
+    } else {
+      console.log(`File not found by ID: ${id}`)
+    }
+
+    return file
+  } catch (error) {
+    console.error(`Error finding file by ID (${id}):`, error)
+    throw error
+  }
+}
+
+async function findFilesByFolderId(id) {
+  try {
+    const files = await prisma.files.findMany({
+      where: { folderId: id },
+    })
+
+    if (files) {
+      console.log(`Files found by Folder ID: ${id}`)
+    } else {
+      console.log(`Files not found by Folder ID: ${id}`)
+    }
+
+    return files
+  } catch (error) {
+    console.error(`Error finding files by Folder ID (${id}):`, error)
+    throw error
+  }
+}
 async function getAllFolders(userId) {
   try {
     const folders = await prisma.folder.findMany({
@@ -85,6 +122,21 @@ async function folderDelete(folderId) {
       `Folder deleted successfully: ${deletedFolder.id} (${deletedFolder.name})`
     )
     return deletedFolder
+  } catch (error) {
+    console.error(`Error deleting folder by ID (${folderId}):`, error)
+    throw error
+  }
+}
+async function fileDelete(fileId) {
+  try {
+    const deletedFile = await prisma.files.delete({
+      where: { id: fileId },
+    })
+
+    console.log(
+      `File deleted successfully: ${deletedFile.id} (${deletedFile.name})`
+    )
+    return deletedFile
   } catch (error) {
     console.error(`Error deleting folder by ID (${folderId}):`, error)
     throw error
@@ -196,6 +248,26 @@ async function postNewNameFolder(folderId, new_folder_name) {
     throw error
   }
 }
+async function postNewNameFile(fileId, new_file_name) {
+  try {
+    const updatedFile = await prisma.files.update({
+      where: {
+        id: fileId,
+      },
+      data: {
+        name: new_file_name,
+      },
+    })
+
+    console.log(
+      `File updated successfully in db with new name: ${new_file_name}`
+    )
+    return updatedFile
+  } catch (error) {
+    console.error(`Error updating file name:`, error)
+    throw error
+  }
+}
 module.exports = {
   findUserByEmail,
   findUserById,
@@ -206,4 +278,8 @@ module.exports = {
   postNewNameFolder,
   findFolderById,
   folderDelete,
+  findFileById,
+  fileDelete,
+  postNewNameFile,
+  findFilesByFolderId,
 }

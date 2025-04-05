@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+  </head>
+  <body>
+    <%- include("./partials/errors.ejs") %> <% if (messages.error &&
+    messages.error.length > 0) { %>
+    <p style="color: red"><%= messages.error[0] %></p>
+    <% } %> <% if (user) { %>
+    <h1>File of <%= user.email %></h1>
+
+    <div class="file_board">
+      <div class="file_name"><%= file.name %></div>
+      <div class="file_time"><%= file.createdTime %></div>
+    </div>
+
+    <h2>Modify file:</h2>
+    <form
+      action="/profile/folder/details/<%= folder.id %>/<%= file.id %>"
+      method="POST"
+    >
+      <label for="new_file_name">Enter new file Name</label>
+      <input
+        id="new_file_name"
+        name="new_file_name"
+        placeholder="Type the new file name"
+        type="text"
+        required
+      />
+      <button type="submit">Modify</button>
+    </form>
+    <a href="/profile/file/details/<%= file.id %>/delete">Delete this file</a>
+    <a href="/profile">Go to profile</a>
+    <a href="/logout">Log out</a>
+    <% } else { %>
+    <p>Please log in first on the homepage.</p>
+    <a href="/">Go to homepage</a>
+    <% } %>
+  </body>
+</html>

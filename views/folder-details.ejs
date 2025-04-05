@@ -16,6 +16,18 @@
       <div class="folder_name"><%= folder.name %></div>
       <div class="folder_time"><%= folder.createdTime %></div>
     </div>
+    <% if (files && files.length > 0) { %><% files.forEach((file)=>{ %>
+    <div class="file_board">
+      <div class="folder_name"><%= file.name %></div>
+
+      <div>
+        <a href="/profile/folder/details/<%= folder.id %>/<%= file.id %>"
+          >View or Edit "<%= file.name %>"</a
+        >
+      </div>
+    </div>
+
+    <% }) %> <% } %>
 
     <h2>Modify folder:</h2>
     <form action="/profile/folder/details/<%= folder.id %>" method="POST">
