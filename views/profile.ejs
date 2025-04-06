@@ -11,16 +11,17 @@
     <p style="color: red"><%= messages.error[0] %></p>
     <% } %> <% if (user) { %>
     <h1>Profile section of <%= user.email %></h1>
-    <% folders.forEach((folder)=>{ %>
-    <div class="folder_board">
-      <div class="folder_name"><%= folder.name %></div>
-
-      <div>
-        <a href="/profile/folder/details/<%= folder.id %>">Open/Modify</a>
+    <div class="folder-container">
+      <h2>Currently you have this folders:</h2>
+      <% folders.forEach((folder)=>{ %>
+      <div class="folder_card">
+        <div class="folder_name"><%= folder.name %></div>
+        <div>
+          <a href="/profile/folder/details/<%= folder.id %>">Open/Modify</a>
+        </div>
       </div>
+      <% }) %>
     </div>
-
-    <% }) %>
     <h2>Create a new folder:</h2>
     <form action="/profile/new-folder" method="POST">
       <label for="folder_name">Folder Name</label>
@@ -46,7 +47,12 @@
 
       <label for="uploaded_file">File:</label>
       <input type="file" name="uploaded_file" />
-
+      <label for="folderId">Choose the folder where to add the file:</label>
+      <select name="folderId" id="folderId">
+        <% folders.forEach((folder)=>{ %>
+        <option value="<%= folder.id %>"><%= folder.name %></option>
+        <% }) %>
+      </select>
       <button type="submit">Upload</button>
     </form>
 

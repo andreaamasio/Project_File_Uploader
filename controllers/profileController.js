@@ -141,10 +141,11 @@ const postProfile = [
     }
 
     let file_name = req.body.file_name
+    let folderId = req.body.folderId
     console.log(`file_name: ${file_name}`)
 
     try {
-      await db.uploadFile(userId, file_name)
+      await db.uploadFile(userId, file_name, folderId)
       res.redirect("/profile")
     } catch (error) {
       console.error("File upload failed:", error)

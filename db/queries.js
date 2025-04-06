@@ -182,18 +182,18 @@ async function postNewUser(email, hashedPassword) {
     throw error
   }
 }
-async function uploadFile(userId, file_name, folderName = "main") {
+async function uploadFile(userId, file_name, folderId) {
   try {
     // Find the "main" folder or the specified folder
     let folder = await prisma.folder.findFirst({
       where: {
         createdById: userId,
-        name: folderName, // Default to "main" if no folder is provided
+        id: folderId, // Default to "main" if no folder is provided
       },
     })
 
     if (!folder) {
-      throw new Error(`Folder "${folderName}" not found for user.`)
+      throw new Error(`Folder "${folder.name}" not found for user.`)
     }
 
     const newFile = await prisma.files.create({
@@ -204,7 +204,7 @@ async function uploadFile(userId, file_name, folderName = "main") {
       },
     })
 
-    console.log(`File uploaded successfully to folder: ${folderName}`)
+    console.log(`File uploaded successfully to folder: ${folder.name}`)
     return newFile
   } catch (error) {
     console.error(`Error uploading file:`, error)
