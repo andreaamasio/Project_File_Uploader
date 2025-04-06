@@ -21,6 +21,9 @@
     <div class="file_board">
       <div class="folder_name"><%= file.name %></div>
       <div>
+        <a href="<%= file.url %>" download>
+          <button>Download File</button>
+        </a>
         <a href="/profile/folder/details/<%= folder.id %>/<%= file.id %>">
           View or Edit "<%= file.name %>"
         </a>

@@ -1,7 +1,24 @@
 const { Router } = require("express")
 const express = require("express")
+// const multer = require("multer")
+// const upload = multer({ dest: "uploads/" })
+//cloudinary setup
 const multer = require("multer")
-const upload = multer({ dest: "uploads/" })
+const { CloudinaryStorage } = require("multer-storage-cloudinary")
+const cloudinary = require("../cloudinary")
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "file_uploader", // Cloudinary folder
+    allowed_formats: ["jpg", "png", "pdf", "docx", "txt"],
+    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
+  },
+})
+
+const upload = multer({ storage })
+
+//module.exports = upload;
 
 const profileController = require("../controllers/profileController")
 const profileRouter = Router()

@@ -182,7 +182,7 @@ async function postNewUser(email, hashedPassword) {
     throw error
   }
 }
-async function uploadFile(userId, file_name, folderId) {
+async function uploadFile(userId, file_name, folderId, uploadedFilePath) {
   try {
     // Find the "main" folder or the specified folder
     let folder = await prisma.folder.findFirst({
@@ -201,6 +201,7 @@ async function uploadFile(userId, file_name, folderId) {
         name: file_name,
         uploadedById: userId,
         folderId: folder.id,
+        url: uploadedFilePath,
       },
     })
 

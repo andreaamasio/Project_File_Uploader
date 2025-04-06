@@ -139,13 +139,18 @@ const postProfile = [
       console.error("Error: User ID not found.")
       return res.status(401).send("Unauthorized: No user logged in.")
     }
-
+    if (!req.file) {
+      req.session.flash = { error: ["No file was uploaded."] }
+      return res.redirect("/profile")
+    }
+    console.log("Uploaded file details:", req.file)
     let file_name = req.body.file_name
     let folderId = req.body.folderId
+    const uploadedFilePath = req.file?.path
     console.log(`file_name: ${file_name}`)
 
     try {
-      await db.uploadFile(userId, file_name, folderId)
+      await db.uploadFile(userId, file_name, folderId, uploadedFilePath)
       res.redirect("/profile")
     } catch (error) {
       console.error("File upload failed:", error)
