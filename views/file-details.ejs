@@ -32,7 +32,9 @@
       />
       <button type="submit">Modify</button>
     </form>
-    <a href="/profile/file/details/<%= file.id %>/delete">Delete this file</a>
+    <a href="/profile/folder/details/<%= folder.id %>/<%= file.id %>/delete"
+      >Delete this file</a
+    >
     <a href="/profile">Go to profile</a>
     <a href="/logout">Log out</a>
     <% } else { %>

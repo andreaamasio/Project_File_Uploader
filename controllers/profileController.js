@@ -42,14 +42,13 @@ const getFileDetails = async (req, res) => {
 }
 const getFileDelete = async (req, res) => {
   console.log(`the user id is ${req.user.id}`)
-  const fileId = req.params.fileId
+  const { folderId, fileId } = req.params
   console.log(`the fileId is ${fileId}`)
-  const fileToDelete = db.findFileById(fileId)
-  const folderId = fileToDelete.folderId
-  console.log(`folderId extracted with point is ${folderId}`)
+
+  console.log(`folderId is ${folderId}`)
   const folder = db.findFolderById(folderId)
   const files = await db.findFilesByFolderId(folderId)
-  await db.fileDelete(fileId)
+  const deletedFile = await db.fileDelete(fileId)
 
   // Get the flash messages from the session
   const flashMessages = req.session.flash || {}
@@ -58,12 +57,13 @@ const getFileDelete = async (req, res) => {
   req.session.flash = {}
 
   // Render the page with messages
-  res.render("folder-details", {
-    messages: flashMessages,
-    folder: folder,
-    files: files,
-    user: req.user,
-  })
+  // res.render("folder-details", {
+  //   messages: flashMessages,
+  //   folder: folder,
+  //   files: files,
+  //   user: req.user,
+  // })
+  res.redirect("/profile/folder/details/" + folderId)
 }
 const getFolderDetails = async (req, res) => {
   console.log(`the user id is ${req.user.id}`)
