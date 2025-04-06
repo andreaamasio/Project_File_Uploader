@@ -3,60 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
+    <title>Folder</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <%- include("./partials/errors.ejs") %> <% if (messages.error &&
-    messages.error.length > 0) { %>
-    <p style="color: red"><%= messages.error[0] %></p>
-    <% } %> <% if (user) { %>
-    <h1>Folder <%= folder.name %> of <%= user.email %></h1>
-
-    <div class="folder_board">
-      <div class="folder_name">Name: <%= folder.name %></div>
-      <div class="folder_time">Created on: <%= folder.createdTime %></div>
-    </div>
-
-    <% if (files && files.length > 0) { %> <% files.forEach((file) => { %>
-    <div class="file_board">
-      <div class="folder_name"><%= file.name %></div>
-      <div>
-        <a href="<%= file.url %>" download>
-          <button>Download File</button>
-        </a>
-        <a href="/profile/folder/details/<%= folder.id %>/<%= file.id %>">
-          View or Edit "<%= file.name %>"
-        </a>
+    <div class="container">
+      <%- include("./partials/errors.ejs") %> <% if (messages.error &&
+      messages.error.length > 0) { %>
+      <p style="color: red"><%= messages.error[0] %></p>
+      <% } %> <% if (user) { %>
+      <h1>Folder <%= folder.name %> of <%= user.email %></h1>
+      <div class="folder_board">
+        <div class="folder_name">Name: <%= folder.name %></div>
+        <div class="folder_time">Created on: <%= folder.createdTime %></div>
       </div>
+      <% if (files && files.length > 0) { %> <% files.forEach((file) => { %>
+      <div class="file_board">
+        <div class="folder_name"><%= file.name %></div>
+        <div>
+          <a href="<%= file.url %>" download>
+            <button>Download File</button>
+          </a>
+          <a href="/profile/folder/details/<%= folder.id %>/<%= file.id %>">
+            View or Edit "<%= file.name %>"
+          </a>
+        </div>
+      </div>
+      <% }) %> <% } else { %>
+      <div>
+        Currently this folder is empty,
+        <a href="/profile">Add File from Profile Page</a>
+      </div>
+      <% } %>
+      <h2>Modify folder:</h2>
+      <form action="/profile/folder/details/<%= folder.id %>" method="POST">
+        <label for="new_folder_name">Enter new Folder Name</label>
+        <input
+          id="new_folder_name"
+          name="new_folder_name"
+          placeholder="Type the new folder name"
+          type="text"
+          required
+        />
+        <button type="submit">Modify</button>
+      </form>
+      <a href="/profile/folder/details/<%= folder.id %>/delete"
+        >Delete this Folder (Warning: all file inside will be deleted!)</a
+      >
+      <a href="/profile">Go to profile</a>
+      <a href="/logout">Log out</a>
+      <% } else { %>
+      <p>Please log in first on the homepage.</p>
+      <a href="/">Go to homepage</a>
+      <% } %>
     </div>
-    <% }) %> <% } else { %>
-    <div>
-      Currently this folder is empty,
-      <a href="/profile">Add File from Profile Page</a>
-    </div>
-    <% } %>
-
-    <h2>Modify folder:</h2>
-    <form action="/profile/folder/details/<%= folder.id %>" method="POST">
-      <label for="new_folder_name">Enter new Folder Name</label>
-      <input
-        id="new_folder_name"
-        name="new_folder_name"
-        placeholder="Type the new folder name"
-        type="text"
-        required
-      />
-      <button type="submit">Modify</button>
-    </form>
-
-    <a href="/profile/folder/details/<%= folder.id %>/delete"
-      >Delete this Folder (Warning: all file inside will be deleted!)</a
-    >
-    <a href="/profile">Go to profile</a>
-    <a href="/logout">Log out</a>
-    <% } else { %>
-    <p>Please log in first on the homepage.</p>
-    <a href="/">Go to homepage</a>
-    <% } %>
   </body>
 </html>

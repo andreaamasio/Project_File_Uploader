@@ -4,63 +4,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <%- include("./partials/errors.ejs") %> <% if (messages.error &&
-    messages.error.length > 0) { %>
-    <p style="color: red"><%= messages.error[0] %></p>
-    <% } %> <% if (user) { %>
-    <h1>Profile section of <%= user.email %></h1>
-    <div class="folder-container">
-      <h2>Currently you have this folders:</h2>
-      <% folders.forEach((folder)=>{ %>
-      <div class="folder_card">
-        <div class="folder_name"><%= folder.name %></div>
-        <div>
+    <div class="container">
+      <%- include("./partials/errors.ejs") %> <% if (messages.error &&
+      messages.error.length > 0) { %>
+      <p class="error"><%= messages.error[0] %></p>
+      <% } %> <% if (user) { %>
+      <h1>Profile section of <%= user.email %></h1>
+
+      <h2>Currently you have these folders:</h2>
+      <div class="folder-container">
+        <% folders.forEach((folder) => { %>
+        <div class="folder_card">
+          <div class="folder_name"><%= folder.name %></div>
           <a href="/profile/folder/details/<%= folder.id %>">Open/Modify</a>
         </div>
-      </div>
-      <% }) %>
-    </div>
-    <h2>Create a new folder:</h2>
-    <form action="/profile/new-folder" method="POST">
-      <label for="folder_name">Folder Name</label>
-      <input
-        id="folder_name"
-        name="folder_name"
-        placeholder="Type the folder name"
-        type="text"
-        required
-      />
-      <button type="submit">Create</button>
-    </form>
-    <h2>Fill the form below to upload a file</h2>
-    <form action="/profile" method="POST" enctype="multipart/form-data">
-      <label for="file_name">File name:</label>
-      <input
-        id="file_name"
-        name="file_name"
-        placeholder="type your file name"
-        type="text"
-        required
-      />
-
-      <label for="uploaded_file">File:</label>
-      <input type="file" name="uploaded_file" />
-      <label for="folderId">Choose the folder where to add the file:</label>
-      <select name="folderId" id="folderId">
-        <% folders.forEach((folder)=>{ %>
-        <option value="<%= folder.id %>"><%= folder.name %></option>
         <% }) %>
-      </select>
-      <button type="submit">Upload</button>
-    </form>
+      </div>
 
-    <a href="/">Go to homepage</a>
-    <a href="/logout">Log out</a>
-    <% } else { %>
-    <p>Please log in first on the homepage.</p>
-    <a href="/">Go to homepage</a>
-    <% } %>
+      <h2>Create a new folder:</h2>
+      <form action="/profile/new-folder" method="POST">
+        <label for="folder_name">Folder Name</label>
+        <input
+          id="folder_name"
+          name="folder_name"
+          placeholder="Type the folder name"
+          type="text"
+          required
+        />
+        <button type="submit">Create</button>
+      </form>
+
+      <h2>Fill the form below to upload a file</h2>
+      <form action="/profile" method="POST" enctype="multipart/form-data">
+        <label for="file_name">File name:</label>
+        <input
+          id="file_name"
+          name="file_name"
+          placeholder="Type your file name"
+          type="text"
+          required
+        />
+
+        <label for="uploaded_file">File:</label>
+        <input type="file" name="uploaded_file" />
+
+        <label for="folderId">Choose the folder where to add the file:</label>
+        <select name="folderId" id="folderId">
+          <% folders.forEach((folder) => { %>
+          <option value="<%= folder.id %>"><%= folder.name %></option>
+          <% }) %>
+        </select>
+
+        <button type="submit">Upload</button>
+      </form>
+
+      <a href="/">Go to homepage</a> |
+      <a href="/logout">Log out</a>
+
+      <% } else { %>
+      <p>Please log in first on the homepage.</p>
+      <a href="/">Go to homepage</a>
+      <% } %>
+    </div>
   </body>
 </html>
